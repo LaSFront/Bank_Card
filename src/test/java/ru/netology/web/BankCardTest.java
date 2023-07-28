@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -37,8 +38,8 @@ public class BankCardTest {
         $("[data-test-id='phone'] input").sendKeys("+79000000000");
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Забронировать")).click();
-        $$(".notification__title").find(exactText("Успешно!"));
-        $$(".notification__content").find(exactText("Встреча успешно забронирована на " + planningDate));
+        $$(".notification__title").find(exactText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $$(".notification__content").find(exactText("Встреча успешно забронирована на " + planningDate)).shouldBe(visible);
     }
     @Test
     void shouldAutocompleteDateAndCity() {
@@ -53,8 +54,6 @@ public class BankCardTest {
 
         if(!generateDate(3,"MM").equals(generateDate(7, "MM"))) {
             $(".calendar__arrow[data-step='1']").click();
-        } else {
-            return;
         }
         $$(".calendar__day").find(exactText(planningDayOfDate)).click();
         // остальные поля
@@ -63,7 +62,7 @@ public class BankCardTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Забронировать")).click();
         //уведомление
-        $$(".notification__title").find(exactText("Успешно!"));
-        $$(".notification__content").find(exactText("Встреча успешно забронирована на " + planningDate));
+        $$(".notification__title").find(exactText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $$(".notification__content").find(exactText("Встреча успешно забронирована на " + planningDate)).shouldBe(visible);
     }
 }
